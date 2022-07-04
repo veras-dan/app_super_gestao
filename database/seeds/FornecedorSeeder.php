@@ -20,6 +20,6 @@ class FornecedorSeeder extends Seeder
         // $fornecedor->uf = 'PI';
         // $fornecedor->save();
 
-        factory(Fornecedor::class, 10)->create();
+        factory(Fornecedor::class, 30)->create();
     }
 }

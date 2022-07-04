@@ -11,15 +11,25 @@ class FornecedorController extends Controller
         return view('app.fornecedor.index');
     }
 
-    public function listar() {
-        return view('app.fornecedor.listar');
+    // Visualizar
+    public function listar(Request $request) {
+        
+        $fornecedores = Fornecedor::where('nome', 'like', '%'.$request->input('nome').'%')
+            ->where('site', 'like', '%'.$request->input('site').'%')
+            ->where('telefone', 'like', '%'.$request->input('telefone').'%')
+            ->where('uf', 'like', '%'.$request->input('uf').'%')
+            ->where('email', 'like', '%'.$request->input('email').'%')
+            ->paginate(5);
+        
+        return view('app.fornecedor.listar', ['fornecedores' => $fornecedores, 'request' => $request->all() ]);
     }
 
+    // Adicionar
     public function adicionar(Request $request) {
         
         $msg = '';
 
-        if($request->input('_token') != '') {
+        if($request->input('_token') != '' && $request->input('id') == '') {
             // Validação
             $regras = [
                 'nome' => 'required|min:3|max:40',
@@ -47,6 +57,41 @@ class FornecedorController extends Controller
             $msg = 'Cadastro realizado com sucesso!';
         }
 
+        // Edição do formulario
+        if($request->input('_token') != '' && $request->input('id') != '') {
+            $fornecedor = Fornecedor::find($request->input('id'));
+            $update = $fornecedor->update($request->all());
+
+            if($update) {
+                $msg = 'Atualização realizada com sucesso';
+            } else {
+                $msg = 'Erro ao tentar realizar o registro!';
+            }
+
+            return redirect()->route('app.fornecedor.editar', ['id' =>$request->input('id'), 'msg' => $msg]);
+        }
+
         return view('app.fornecedor.adicionar', ['msg' => $msg]);
+    }
+
+    // Editar
+    public function editar($id, $msg ='') {
+        
+        $fornecedor = Fornecedor::find($id);
+
+        return view('app.fornecedor.adicionar', ['fornecedor' => $fornecedor, 'msg' => $msg]);
+    }
+
+
+    // Excluir
+    public function excluir($id) {
+        
+        // Deletar um registro da visualização (O mesmo permanece por causa do SoftDeletes)
+        Fornecedor::find($id)->delete();
+
+        // Deletar um registro do BD passando por cima do SoftDeletes
+        // Fornecedor::find($id)->forceDelete();
+
+        return redirect()->route('app.fornecedor');
     }
 }
