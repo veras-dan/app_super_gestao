@@ -6,10 +6,10 @@
         @endif
     <br>
     <input name="telefone" value="{{ old('telefone') }}" type="text" placeholder="Telefone" class="{{ $classe}}">
-        {{ $errors->first('nome') ? $errors->first('telefone') : '' }}
+        {{ $errors->has('telefone') ? $errors->first('telefone') : '' }}
     <br>
     <input name="email" value="{{ old('email') }}" type="text" placeholder="E-mail" class="{{ $classe}}">
-        {{ $errors->first('email') ? $errors->first('email') : '' }}
+        {{ $errors->has('email') ? $errors->first('email') : '' }}
     <br>
     <select name="motivo_contatos_id" class="{{ $classe}}">
         <option value="">Qual o motivo do contato?</option>
@@ -19,7 +19,7 @@
             @endforeach
             
     </select>
-        {{ $errors->first('motivo_contatos_id') ? $errors->first('motivo_contatos_id') : '' }}
+        {{ $errors->has('motivo_contatos_id') ? $errors->first('motivo_contatos_id') : '' }}
     <br>
     
     <textarea name="mensagem" value="{{ old('mensagem') }}" class="{{ $classe}}" placeholder="Preencha aqui a sua mensagem"></textarea>
