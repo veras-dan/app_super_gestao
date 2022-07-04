@@ -17,7 +17,7 @@
 
         <div class="informacao-pagina">
             <div style="width:30%; margin-left:auto; margin-right:auto;">
-                <form action="" method="post">
+                <form action="{{ route('produto.store') }}" method="post">
                     @csrf
                     <input type="text" value="" name="nome" placeholder="Nome" class="borda-preta">
                         {{-- {{ $errors->has('nome') ? $errors->first('nome') : '' }} --}}
@@ -30,7 +30,11 @@
 
                     <select name="unidade_id">
                         <option value="">-- Selecione uma unidade --</option>
-                        <option value="1">Unidade</option>
+                        
+                        @foreach ($unidades as $unidade)
+                         <option value="{{ $unidade->id }}">{{ $unidade->descricao }}</option>
+                        @endforeach
+
                     </select>
 
                     <button type="subimit" class="borda-preta">Cadastrar</button>
