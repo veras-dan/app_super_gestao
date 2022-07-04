@@ -10,7 +10,7 @@
 
         <div class="menu">
             <ul>
-                <li><a href="{{ route('app.fornecedor.adicionar') }}">Novo</a></li>
+                <li><a href="{{ route('app.fornecedor.listar') }}">Voltar</a></li>
                 <li><a href="{{ route('app.fornecedor') }}">Consulta</a></li>
             </ul>
         </div>
@@ -24,14 +24,19 @@
                     @csrf
                     <input type="text" value="{{ $fornecedor->nome ?? old('nome') }}" name="nome" placeholder="Nome" class="borda-preta">
                         {{ $errors->has('nome') ? $errors->first('nome') : '' }}
+
                     <input type="text" value="{{ $fornecedor->site ?? old('site') }}" name="site" placeholder="Site" class="borda-preta">
                         {{ $errors->has('site') ? $errors->first('site') : '' }}
-                    <input name="telefone" value="{{ $fornecedor->telefone ?? old('telefone') }}" type="text" placeholder="Telefone" class="borda-preta">
+
+                    <input type="text" value="{{ $fornecedor->telefone ?? old('telefone') }}" name="telefone" placeholder="Telefone" class="borda-preta">
                         {{ $errors->has('telefone') ? $errors->first('telefone') : '' }}
+
                     <input type="text" value="{{ $fornecedor->uf ?? old('uf') }}" name="uf" placeholder="UF" class="borda-preta">
                         {{ $errors->has('uf') ? $errors->first('uf') : '' }}
+
                     <input type="text" value="{{ $fornecedor->email ?? old('email') }}" name="email" placeholder="Email" class="borda-preta">
                         {{ $errors->has('email') ? $errors->first('email') : '' }}
+                        
                     <button type="subimit" class="borda-preta">Cadastrar</button>
                 </form>
             </div>
