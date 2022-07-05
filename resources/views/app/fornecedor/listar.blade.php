@@ -42,8 +42,8 @@
                                 <td>{{ $fornecedor->telefone }}</td>
                                 <td>{{ $fornecedor->uf }}</td>
                                 <td>{{ $fornecedor->email }}</td>
-                                <td><a href="{{ route('app.fornecedor.editar', $fornecedor->id) }}"><span class="material-symbols-outlined">edit_square</span></a></td>
-                                <td><a href="{{ route('app.fornecedor.excluir', $fornecedor->id) }}"><span class="material-symbols-outlined">delete</span></a></td>
+                                <td><a href="{{ route('app.fornecedor.editar', $fornecedor->id) }}"><span class="material-symbols-outlined edit-color">edit_square</span></a></td>
+                                <td><a href="{{ route('app.fornecedor.excluir', $fornecedor->id) }}"><span class="material-symbols-outlined del-color">delete</span></a></td>
                             </tr>
                         @endforeach
                     </tbody>
