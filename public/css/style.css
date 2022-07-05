@@ -208,3 +208,25 @@ button:hover {
 .pagination ul {
     list-style-type: none;
 }
+
+
+
+
+/* :hover */
+.del-color:hover {
+    color: red;
+    transition: 0.7s;
+    opacity: 0.9;
+}
+
+.edit-color:hover {
+    color: green;
+    transition: 0.7s;
+    opacity: 0.9;
+}
+
+.visul-color:hover {
+    color: blue;
+    transition: 0.7s;
+    opacity: 0.9;
+}
