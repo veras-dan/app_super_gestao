@@ -29,8 +29,7 @@
                             <th>Descrição</th>
                             <th>Peso</th>
                             <th>Unid_ID</th>
-                            <th></th>
-                            <th></th>
+                            <th colspan="3">Ações</th>
                         </tr>
                     </thead>
 
@@ -41,8 +40,15 @@
                                 <td>{{ $produto->descricao }}</td>
                                 <td>{{ $produto->peso }}</td>
                                 <td>{{ $produto->unidade_id }}</td>
-                                <td><a href=""><span class="material-symbols-outlined">edit_square</span></a></td>
-                                <td><a href=""><span class="material-symbols-outlined">delete</span></a></td>
+                                <td><a href="{{ route('produto.show', ['produto' => $produto->id]) }}"><span class="material-symbols-outlined visul-color">info</span></a></td>
+                                <td><a href="{{ route('produto.edit', ['produto' => $produto->id]) }}"><span class="material-symbols-outlined edit-color">edit_square</span></a></td>
+                                <td>
+                                    <form id="form_{{$produto->id}}" method="post" action="{{ route('produto.destroy', ['produto' => $produto->id]) }}">
+                                        @method('DELETE')
+                                        @csrf
+                                        <a href="#" onclick="document.getElementById('form_{{$produto->id}}').submit()"><span class="material-symbols-outlined del-color">delete</span></a>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
