@@ -27,6 +27,7 @@ Route::middleware('autenticacao:padrao,visitante')->prefix('/app')->group(functi
 
     Route::get('/cliente', 'ClienteController@index')->name('app.cliente');
 
+    // Route - Fornecedor
     Route::get('/fornecedor', 'FornecedorController@index' )->name('app.fornecedor');
     Route::get('/fornecedor/listar', 'FornecedorController@listar' )->name('app.fornecedor.listar');
     Route::post('/fornecedor/listar', 'FornecedorController@listar' )->name('app.fornecedor.listar');
@@ -35,7 +36,11 @@ Route::middleware('autenticacao:padrao,visitante')->prefix('/app')->group(functi
     Route::get('/fornecedor/editar/{id}/{msg?}', 'FornecedorController@editar' )->name('app.fornecedor.editar');
     Route::get('/fornecedor/excluir/{id}', 'FornecedorController@excluir' )->name('app.fornecedor.excluir');
 
+    // Route - Produto
     Route::resource('produto', 'ProdutoController' );
+
+    // Route - Produto Detalhe
+    Route::resource('produto-detalhe', 'ProdutoDetalheController' );
 });
 
 Route::fallback(function() {
