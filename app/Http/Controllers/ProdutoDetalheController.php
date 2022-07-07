@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Unidade;
+use App\ProdutoDetalhe;
 
 class ProdutoDetalheController extends Controller
 {
@@ -15,13 +17,14 @@ class ProdutoDetalheController extends Controller
 
     public function create()
     {
-        //
+        $unidades = Unidade::all();
+        return view('app.produto_detalhe.create', ['unidades' => $unidades]);
     }
 
 
     public function store(Request $request)
     {
-        //
+        ProdutoDetalhe::create($request->all());
     }
 
 
@@ -31,15 +34,17 @@ class ProdutoDetalheController extends Controller
     }
 
 
-    public function edit($id)
+    public function edit(ProdutoDetalhe $produtoDetalhe)
     {
-        //
+        $unidades = Unidade::all();
+        return view('app.produto_detalhe.edit', ['produto_detalhe' => $produtoDetalhe, 'unidades' => $unidades]);
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, ProdutoDetalhe $produtoDetalhe)
     {
-        //
+        $produtoDetalhe->update($request->all());
+        echo 'Dados atualizados com sucesso!';
     }
 
 
