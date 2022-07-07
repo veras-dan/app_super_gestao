@@ -12,37 +12,35 @@ class ContatoController extends Controller
 
         $motivo_contatos = MotivoContato::all();
 
-        return view('site.contato', ['titulo' => 'Contato', 'motivo_contatos' => $motivo_contatos]);
-
+        return view('site.contato', ['titulo' => 'Contato (teste)', 'motivo_contatos' => $motivo_contatos]);
     }
 
     public function salvar(Request $request) {
 
-        // Array de regras para preenchimento do form
+        //realizar a validação dos dados do formulário recebidos no request
         $regras = [
-            'nome' => 'required|min:3|max:40',
+            'nome' => 'required|min:3|max:40|unique:site_contatos',
             'telefone' => 'required',
             'email' => 'email',
             'motivo_contatos_id' => 'required',
             'mensagem' => 'required|max:2000'
         ];
 
-        // Array de feedback para validação do form
         $feedback = [
-            'nome.min' => 'O nome precisa ter no mínimo 3 caracteres.',
-            'nome.max' => 'O nome precisa ter no máximo 40 caracteres.',
-            'nome.unique' => 'O nome já esta em uso!',
-            'email.email' => 'Email informado não é válido!',
-            'mensagem.max' => 'A mensagem precisa ter no máximo 2000 caracteres.',
+            'nome.min' => 'O campo nome precisa ter no mínimo 3 caracteres',
+            'nome.max' => 'O campo nome deve ter no máximo 40 caracteres',
+            'nome.unique' => 'O nome informado já está em uso',
+            
+            'email.email' => 'O email informado não é válido',
 
-            'required' => 'O campo :attribute deve ser preenchido!'
+            'mensagem.max' => 'A mensagem deve ter no máximo 2000 caracteres',
+            
+            'required' => 'O campo :attribute deve ser preenchido'
         ];
-
-        // Validação dos dados da tabela;
+        
         $request->validate($regras, $feedback);
 
         SiteContato::create($request->all());
         return redirect()->route('site.index');
-
     }
 }

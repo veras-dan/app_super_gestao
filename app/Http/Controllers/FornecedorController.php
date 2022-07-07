@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Fornecedor;
 use Illuminate\Http\Request;
+use App\Fornecedor;
 
 class FornecedorController extends Controller
 {
@@ -11,30 +11,27 @@ class FornecedorController extends Controller
         return view('app.fornecedor.index');
     }
 
-    // Visualizar
     public function listar(Request $request) {
-        
-        $fornecedores = Fornecedor::where('nome', 'like', '%'.$request->input('nome').'%')
+
+        $fornecedores = Fornecedor::with(['produtos'])->where('nome', 'like', '%'.$request->input('nome').'%')
             ->where('site', 'like', '%'.$request->input('site').'%')
-            ->where('telefone', 'like', '%'.$request->input('telefone').'%')
             ->where('uf', 'like', '%'.$request->input('uf').'%')
             ->where('email', 'like', '%'.$request->input('email').'%')
             ->paginate(5);
-        
+
         return view('app.fornecedor.listar', ['fornecedores' => $fornecedores, 'request' => $request->all() ]);
     }
 
-    // Adicionar
     public function adicionar(Request $request) {
-        
-        $msg = '';
 
+        $msg = '';
+        
+        //inclusão
         if($request->input('_token') != '' && $request->input('id') == '') {
-            // Validação
+            //validacao
             $regras = [
                 'nome' => 'required|min:3|max:40',
                 'site' => 'required',
-                'telefone' => 'required',
                 'uf' => 'required|min:2|max:2',
                 'email' => 'email'
             ];
@@ -45,19 +42,21 @@ class FornecedorController extends Controller
                 'nome.max' => 'O campo nome deve ter no máximo 40 caracteres',
                 'uf.min' => 'O campo uf deve ter no mínimo 2 caracteres',
                 'uf.max' => 'O campo uf deve ter no máximo 2 caracteres',
-                'email.email' => 'O campo email não foi preenchido corretamente'
+                'email.email' => 'O campo e-mail não foi preenchido corretamente'
             ];
 
             $request->validate($regras, $feedback);
 
             $fornecedor = new Fornecedor();
-            $fornecedor::create($request->all());
+            $fornecedor->create($request->all());
 
-            // Mensagem de cadastro realizado com sucesso;
-            $msg = 'Cadastro realizado com sucesso!';
+            //redirect
+
+            //dados view
+            $msg = 'Cadastro realizado com sucesso';
         }
 
-        // Edição do formulario
+        //edição
         if($request->input('_token') != '' && $request->input('id') != '') {
             $fornecedor = Fornecedor::find($request->input('id'));
             $update = $fornecedor->update($request->all());
@@ -65,32 +64,25 @@ class FornecedorController extends Controller
             if($update) {
                 $msg = 'Atualização realizada com sucesso';
             } else {
-                $msg = 'Erro ao tentar realizar o registro!';
+                $msg = 'Erro ao tentar atualizar o registro';
             }
 
-            return redirect()->route('app.fornecedor.editar', ['id' =>$request->input('id'), 'msg' => $msg]);
+            return redirect()->route('app.fornecedor.editar', ['id' => $request->input('id'), 'msg' => $msg]);
         }
 
         return view('app.fornecedor.adicionar', ['msg' => $msg]);
     }
 
-    // Editar
-    public function editar($id, $msg ='') {
+    public function editar($id, $msg = '') {
         
         $fornecedor = Fornecedor::find($id);
 
         return view('app.fornecedor.adicionar', ['fornecedor' => $fornecedor, 'msg' => $msg]);
     }
 
-
-    // Excluir
     public function excluir($id) {
-        
-        // Deletar um registro da visualização (O mesmo permanece por causa do SoftDeletes)
         Fornecedor::find($id)->delete();
-
-        // Deletar um registro do BD passando por cima do SoftDeletes
-        // Fornecedor::find($id)->forceDelete();
+        //Fornecedor::find($id)->forceDelete();
 
         return redirect()->route('app.fornecedor');
     }
