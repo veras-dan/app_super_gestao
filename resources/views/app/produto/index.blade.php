@@ -30,9 +30,8 @@
                             <th>Comprimento</th>
                             <th>Altura</th>
                             <th>Largura</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            <th colspan="3">Ações</th>
+                            
                         </tr>
                     </head>
 
