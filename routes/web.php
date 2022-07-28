@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClienteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,8 +26,6 @@ Route::middleware('autenticacao:padrao,visitante')->prefix('/app')->group(functi
     Route::get('/home', 'HomeController@index' )->name('app.home');
     Route::get('/sair', 'LoginController@sair' )->name('app.sair');
 
-    Route::get('/cliente', 'ClienteController@index')->name('app.cliente');
-
     // Route - Fornecedor
     Route::get('/fornecedor', 'FornecedorController@index' )->name('app.fornecedor');
     Route::get('/fornecedor/listar', 'FornecedorController@listar' )->name('app.fornecedor.listar');
@@ -39,8 +38,12 @@ Route::middleware('autenticacao:padrao,visitante')->prefix('/app')->group(functi
     // Route - Produto
     Route::resource('produto', 'ProdutoController' );
 
-    // Route - Produto Detalhe
+    // Route - Produto Detalhes
     Route::resource('produto-detalhe', 'ProdutoDetalheController' );
+
+    Route::resource('cliente', 'ClienteController');
+    Route::resource('pedido', 'PedidoController');
+    Route::resource('pedido-produto', 'PedidoProdutoController');
 });
 
 Route::fallback(function() {
