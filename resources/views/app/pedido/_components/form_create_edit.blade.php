@@ -15,8 +15,6 @@
         @endforeach
 
     </select>
-
-    <input type="text" value="{{ $pedido->nome ?? old('nome') }}" name="nome" placeholder="Nome" class="borda-preta">
         {{ $errors->has('cliente_id') ? $errors->first('cliente_id') : '' }}
 
     <button type="subimit" class="borda-preta">Cadastrar</button>

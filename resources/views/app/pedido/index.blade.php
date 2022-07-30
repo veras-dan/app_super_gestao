@@ -24,8 +24,8 @@
                         <tr>
                             <th>ID Pedido</th>
                             <th>Cliente</th>
-                            
-                            <th colspan="3">Ações</th>
+                                                        
+                            <th colspan="4">Ações</th>
                             
                         </tr>
                     </head>
@@ -34,8 +34,8 @@
                         @foreach($pedidos as $pedido)
                             <tr>
                                 <td>{{ $pedido->id }}</td>
-                                <td>{{ $pedido->pedido_id }}</td>
-                                
+                                <td>{{ $pedido->cliente_id }}</td>
+                                <td><a href="{{ route('pedido-produto.create', ['pedido' => $pedido->id ]) }}"><span class="material-symbols-outlined">add_shopping_cart</span></a></td>
                                 <td><a href="{{ route('pedido.show', ['pedido' => $pedido->id ]) }}"><span class="material-symbols-outlined visul-color">info</span></a></td>
                                 <td><a href="{{ route('pedido.edit', ['pedido' => $pedido->id ]) }}"><span class="material-symbols-outlined edit-color">edit_square</span></a></td>
                                 <td>
